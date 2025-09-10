@@ -38,6 +38,7 @@ var package = Package(
     .package(url: "https://github.com/pointfreeco/swift-overture", from: "0.5.0"),
     .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.10.0"),
     .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "1.2.3"),
+    .package(url: "https://github.com/exyte/Chat.git", from: "4.0.0"),
   ],
   targets: [
     .target(
@@ -54,6 +55,13 @@ var package = Package(
       providers: [
         .apt(["libsqlite3-dev"]),
         .brew(["sqlite3"]),
+      ]
+    ),
+    .target(
+      name: "ChatFeature",
+      dependencies: [
+        .product(name: "Chat", package: "Chat"),
+        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
       ]
     ),
     .target(

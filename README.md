@@ -17,6 +17,10 @@ Available on the [App Store](https://www.isowords.xyz/app-store) now!
 * [Learn More](#learn-more)
 * [Related Projects](#related-projects)
 * [License](#license)
+## Chat MVP
+
+This fork adds a minimal `ChatFeature` powered by the [Composable Architecture](https://github.com/pointfreeco/swift-composable-architecture) and [exyte/Chat](https://github.com/exyte/Chat) for the UI. It serves as a starting point for building an AI chat client and currently echoes messages locally.
+
 
 # About
 
