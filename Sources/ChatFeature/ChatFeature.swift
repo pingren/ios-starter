@@ -16,22 +16,37 @@ public struct ChatFeature: Reducer {
     case sendDraft(DraftMessage)
   }
 
-  public init() {}
+  private let uuidGenerator: () -> String
+
+  public init(uuidGenerator: @escaping () -> String = { UUID().uuidString }) {
+    self.uuidGenerator = uuidGenerator
+  }
 
   public var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
       case let .sendDraft(draft):
         // For MVP we simply append the draft locally and echo a fake response.
-        state.messages.append(draft.toMessage(id: UUID().uuidString, user: .init(id: "me")))
+        state.messages.append(draft.toMessage(id: uuidGenerator(), user: .init(id: "me")))
         state.messages.append(
-          Message(id: UUID().uuidString, user: .init(id: "bot"), text: "Echo: \(draft.text)")
+          Message(id: uuidGenerator(), user: .init(id: "bot"), text: "Echo: \(draft.text)")
         )
         return .none
       }
     }
   }
 }
+
+#if DEBUG
+// MARK: - Testing Helper
+
+extension ChatFeature {
+  /// Create a ChatFeature with a deterministic UUID generator for testing
+  public static func testValue(uuidGenerator: @escaping () -> String) -> ChatFeature {
+    ChatFeature(uuidGenerator: uuidGenerator)
+  }
+}
+#endif
 
 // MARK: - View
 
